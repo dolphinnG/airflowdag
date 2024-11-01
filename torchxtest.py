@@ -19,7 +19,7 @@ def run_torchx(message):
     """This is a function that will run within the DAG execution"""
     from torchx.runner import get_runner
     logger = LoggingMixin().log
-
+    logger.info(f"Running TorchX job with message: {message}")
     with get_runner() as runner:
         # Run the utils.sh component on the local_cwd scheduler.
         app_id = runner.run_component(
