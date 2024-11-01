@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.decorators import task
-from airflowdag.test.A import Aclass
+from git_airflowdag.test.A import Aclass
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
