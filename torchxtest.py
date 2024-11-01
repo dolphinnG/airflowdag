@@ -26,7 +26,7 @@ def run_torchx(message):
             scheduler="local_cwd",
         )
 
-        # Wait for the the job to complete
+        # Wait for the job to complete
         status = runner.wait(app_id, wait_interval=1)
 
         # Raise_for_status will raise an exception if the job didn't succeed
@@ -36,14 +36,11 @@ def run_torchx(message):
         # will show up in the workflow logs.
         for line in runner.log_lines(app_id, "sh", k=0):
             print(line, end="")
-            
 
 with DAG(
     dag_id='test-torchx',
     schedule_interval=None,
-    start_date=DATA_INTERVAL_START,
     catchup=False,
     tags=['example'],
 ) as dag:
     run_job = run_torchx("Hello, TorchX!")
-
