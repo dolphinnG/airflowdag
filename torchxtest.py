@@ -8,6 +8,12 @@ from airflow.decorators import task
 DATA_INTERVAL_START = pendulum.datetime(2021, 9, 13, tz="UTC")
 DATA_INTERVAL_END = DATA_INTERVAL_START + datetime.timedelta(days=1)
 
+@task
+def test_logging():
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info("This is a test log message before running TorchX job.")
+
 @task.virtualenv(
     task_id='hello_torchx',
     requirements=["torchx"],
@@ -50,4 +56,7 @@ with DAG(
     catchup=False,
     tags=['example'],
 ) as dag:
+    log_task = test_logging()
     run_job = run_torchx("Hello, TorchX!")
+
+    log_task >> run_job
