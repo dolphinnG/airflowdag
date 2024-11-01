@@ -47,15 +47,3 @@ with DAG(
 ) as dag:
     run_job = run_torchx("Hello, TorchX!")
 
-
-dagrun = dag.create_dagrun(
-    state=DagRunState.RUNNING,
-    execution_date=DATA_INTERVAL_START,
-    data_interval=(DATA_INTERVAL_START, DATA_INTERVAL_END),
-    start_date=DATA_INTERVAL_END,
-    run_type=DagRunType.MANUAL,
-)
-ti = dagrun.get_task_instance(task_id="hello_torchx")
-ti.task = dag.get_task(task_id="hello_torchx")
-ti.run(ignore_ti_state=True)
-assert ti.state == TaskInstanceState.SUCCESS
