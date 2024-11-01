@@ -16,6 +16,8 @@ DATA_INTERVAL_END = DATA_INTERVAL_START + datetime.timedelta(days=1)
     execution_timeout=datetime.timedelta(minutes=30),  # Increase timeout as needed
 )
 def run_torchx(message):
+    logger.info(f"BEFORE")
+
     """This is a function that will run within the DAG execution"""
     from torchx.runner import get_runner
     logger = LoggingMixin().log
