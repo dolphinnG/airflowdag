@@ -1,33 +1,19 @@
 import datetime
 import pendulum
+
 from airflow.utils.state import DagRunState, TaskInstanceState
 from airflow.utils.types import DagRunType
 from airflow.models.dag import DAG
 from airflow.decorators import task
 
+
 DATA_INTERVAL_START = pendulum.datetime(2021, 9, 13, tz="UTC")
 DATA_INTERVAL_END = DATA_INTERVAL_START + datetime.timedelta(days=1)
 
-@task
-def test_logging():
-    import logging
-    logger = logging.getLogger(__name__)
-    logger.info("This is a test log message before running TorchX job.")
-
-@task.virtualenv(
-    task_id='hello_torchx',
-    requirements=["torchx"],
-    system_site_packages=False,
-    execution_timeout=datetime.timedelta(minutes=30),  # Increase timeout as needed
-)
+@task(task_id='hello_torchx')
 def run_torchx(message):
-    import logging
-    logger = logging.getLogger(__name__)
-    logger.info(f"BEFORE")
-
     """This is a function that will run within the DAG execution"""
     from torchx.runner import get_runner
-    logger.info(f"Running TorchX job with message: {message}")
     with get_runner() as runner:
         # Run the utils.sh component on the local_cwd scheduler.
         app_id = runner.run_component(
@@ -42,21 +28,15 @@ def run_torchx(message):
         # Raise_for_status will raise an exception if the job didn't succeed
         status.raise_for_status()
 
-        # Log the status
-        logger.info(f"Job {app_id} completed with status: {status}")
-
         # Finally we can print all of the log lines from the TorchX job so it
         # will show up in the workflow logs.
         for line in runner.log_lines(app_id, "sh", k=0):
-            logger.info(line)
+            print(line, end="")
 
 with DAG(
-    dag_id='test-torchx3',
+    dag_id='test-torchx',
     schedule_interval=None,
     catchup=False,
     tags=['example'],
 ) as dag:
-    log_task = test_logging()
     run_job = run_torchx("Hello, TorchX!")
-
-    log_task >> run_job
