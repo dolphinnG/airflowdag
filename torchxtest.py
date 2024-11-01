@@ -21,7 +21,7 @@ def run_torchx(message):
         # Run the utils.sh component on the local_cwd scheduler.
         app_id = runner.run_component(
             "utils.sh",
-            ["echo", message],
+            ["echo", "HHHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"],
             scheduler="local_cwd",
         )
 
