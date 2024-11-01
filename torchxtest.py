@@ -38,7 +38,7 @@ def run_torchx(message):
             print(line, end="")
 
 with DAG(
-    dag_id='test-torchx',
+    dag_id='test-torchx2',
     schedule_interval=None,
     catchup=False,
     tags=['example'],
