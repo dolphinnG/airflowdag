@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.decorators import task
-from A import A
+from A import Aclass
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -26,7 +26,7 @@ start = EmptyOperator(
 @task
 def process_data():
     print("Processing data...")
-    A()
+    Aclass()
 
 end = process_data()
 
