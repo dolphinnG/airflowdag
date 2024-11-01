@@ -14,6 +14,9 @@ DATA_INTERVAL_END = DATA_INTERVAL_START + datetime.timedelta(days=1)
 def run_torchx(message):
     """This is a function that will run within the DAG execution"""
     from torchx.runner import get_runner
+    import logging 
+    logger = logging.getLogger(__name__)
+    logger.info("Running TorchX job with message: %s", message)
     with get_runner() as runner:
         # Run the utils.sh component on the local_cwd scheduler.
         app_id = runner.run_component(
@@ -24,7 +27,7 @@ def run_torchx(message):
 
         # Wait for the job to complete
         status = runner.wait(app_id, wait_interval=1)
-
+        logger.info("Job completed with status: %s", status)
         # Raise_for_status will raise an exception if the job didn't succeed
         status.raise_for_status()
 
