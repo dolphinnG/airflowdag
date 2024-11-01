@@ -39,7 +39,7 @@ def run_torchx(message):
             
 
 with DAG(
-    dag_id='example_python_operator',
+    dag_id='test-torchx',
     schedule_interval=None,
     start_date=DATA_INTERVAL_START,
     catchup=False,
