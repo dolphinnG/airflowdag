@@ -24,9 +24,9 @@ def run_torchx(message):
             ["echo", message],
             scheduler="kubernetes",
             cfg={
-                "queue": "dolphin-queu",
-                # "namespace": "dolphin-ns",
-                "scheduler": "volcano",
+                "queue": "default",
+                "namespace": "dolphin-ns",
+                # "scheduler": "volcano",
                 # "api_server": "https://volcano-admission-service:443",
                 # "ssl_verify": False,  # Set to False if you want to skip SSL verification
             }
