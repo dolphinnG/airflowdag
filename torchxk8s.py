@@ -20,12 +20,12 @@ def run_torchx(message):
     with get_runner() as runner:
         # Run the utils.sh component on the kubernetes scheduler with Volcano
         app_id = runner.run_component(
-            "utils.echo",
-            ["--image", "alpine:latest", "--msg", "hello"],
+            "utils.sh",
+            ["echo", f"{message}AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"],
             scheduler="kubernetes",
             cfg={
-                "queue": "test",
-                "namespace": "default",
+                "queue": "dolphin-queu",
+                "namespace": "dolphin-ns",
                 # "scheduler": "volcano",
                 # "api_server": "https://volcano-admission-service:443",
                 # "ssl_verify": False,  # Set to False if you want to skip SSL verification
