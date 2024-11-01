@@ -4,7 +4,6 @@ from airflow.utils.state import DagRunState, TaskInstanceState
 from airflow.utils.types import DagRunType
 from airflow.models.dag import DAG
 from airflow.decorators import task
-from airflow.utils.log.logging_mixin import LoggingMixin
 
 DATA_INTERVAL_START = pendulum.datetime(2021, 9, 13, tz="UTC")
 DATA_INTERVAL_END = DATA_INTERVAL_START + datetime.timedelta(days=1)
@@ -16,11 +15,12 @@ DATA_INTERVAL_END = DATA_INTERVAL_START + datetime.timedelta(days=1)
     execution_timeout=datetime.timedelta(minutes=30),  # Increase timeout as needed
 )
 def run_torchx(message):
+    import logging
+    logger = logging.getLogger(__name__)
     logger.info(f"BEFORE")
 
     """This is a function that will run within the DAG execution"""
     from torchx.runner import get_runner
-    logger = LoggingMixin().log
     logger.info(f"Running TorchX job with message: {message}")
     with get_runner() as runner:
         # Run the utils.sh component on the local_cwd scheduler.
