@@ -14,6 +14,7 @@ DATA_INTERVAL_END = DATA_INTERVAL_START + datetime.timedelta(days=1)
     task_id='hello_torchx',
     requirements=["torchx"],
     system_site_packages=False,
+    execution_timeout=datetime.timedelta(minutes=30),  # Increase timeout as needed
 )
 def run_torchx(message):
     """This is a function that will run within the DAG execution"""
@@ -38,7 +39,7 @@ def run_torchx(message):
             print(line, end="")
 
 with DAG(
-    dag_id='test-torchx2',
+    dag_id='test-torchx3',
     schedule_interval=None,
     catchup=False,
     tags=['example'],
