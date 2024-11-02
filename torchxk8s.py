@@ -21,10 +21,13 @@ def run_torchx(message):
     # os.environ['KUBECONFIG'] = '/.kube/config'
     # from kubernetes import client, config
     # config.load_incluster_config()
+    from kubernetes import client, config
+    config.load_incluster_config()
     from torchx.runner import get_runner
     import logging 
     logger = logging.getLogger(__name__)
     logger.info("Running TorchX job with message: %s", message)
+    config.load_incluster_config()
     with get_runner() as runner:
         # Run the utils.sh component on the kubernetes scheduler with Volcano
         app_id = runner.run_component(
