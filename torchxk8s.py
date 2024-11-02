@@ -12,6 +12,9 @@ DATA_INTERVAL_END = DATA_INTERVAL_START + datetime.timedelta(days=1)
 
 @task(task_id='hello_torchx')
 def run_torchx(message):
+    home_directory = os.path.expanduser("~")
+    print(f"Home directory: {home_directory}")
+    
     """This is a function that will run within the DAG execution"""
     # import os
     # os.environ['KUBECONFIG'] = '/.kube/config'
@@ -19,6 +22,7 @@ def run_torchx(message):
     config.load_incluster_config()
     from torchx.runner import get_runner
     import logging 
+import os
     logger = logging.getLogger(__name__)
     logger.info("Running TorchX job with message: %s", message)
     with get_runner() as runner:
