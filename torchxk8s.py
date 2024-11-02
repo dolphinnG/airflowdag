@@ -15,6 +15,8 @@ def run_torchx(message):
     """This is a function that will run within the DAG execution"""
     # import os
     # os.environ['KUBECONFIG'] = '/.kube/config'
+    from kubernetes import client, config
+    config.load_incluster_config()
     from torchx.runner import get_runner
     import logging 
     logger = logging.getLogger(__name__)
