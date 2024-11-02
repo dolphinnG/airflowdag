@@ -19,8 +19,8 @@ def run_torchx(message):
     """This is a function that will run within the DAG execution"""
     # import os
     # os.environ['KUBECONFIG'] = '/.kube/config'
-    from kubernetes import client, config
-    config.load_incluster_config()
+    # from kubernetes import client, config
+    # config.load_incluster_config()
     from torchx.runner import get_runner
     import logging 
     logger = logging.getLogger(__name__)
@@ -28,8 +28,8 @@ def run_torchx(message):
     with get_runner() as runner:
         # Run the utils.sh component on the kubernetes scheduler with Volcano
         app_id = runner.run_component(
-            "utils.sh",
-            ["echo", f"{message}AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"],
+            "utils.echo",
+            ["--msg", f"{message}AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"],
             scheduler="kubernetes",
             cfg={
                 "queue": "dolphin-queu",
@@ -58,3 +58,5 @@ with DAG(
     tags=['example'],
 ) as dag:
     run_job = run_torchx("Hello, TorchX!")
+    
+    # torchx run -s kubernetes -cfg namespace=dolphin-ns,serviceaccount=airflow-sa,queue=dolphin-queu --workspace="" utils.echo --msg lmaohehehehe
