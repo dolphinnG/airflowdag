@@ -4,13 +4,7 @@ from airflow.utils.dates import days_ago
 from kubernetes import client, config
 import logging
 
-# Define the DAG
-dag = DAG(
-    dag_id='query_k8s_secret',
-    default_args={'owner': 'airflow'},
-    schedule_interval=None,
-    start_date=days_ago(1),
-)
+
 
 @task(task_id='get_k8s_secret')
 def get_k8s_secret(secret_name, namespace):
@@ -29,9 +23,15 @@ def get_k8s_secret(secret_name, namespace):
     except client.exceptions.ApiException as e:
         logging.error("Exception when calling CoreV1Api->read_namespaced_secret: %s\n" % e)
 
-# Define the task in the DAG
-get_k8s_secret('my-secret', 'default')
 
-# Add the task to the DAG
-get_k8s_secret_task = get_k8s_secret(secret_name='airflowtest', namespace='dolphin-ns')
-get_k8s_secret_task.dag = dag
+
+# Define the DAG
+with DAG(
+    dag_id='query_k8s_secret',
+    default_args={'owner': 'airflow'},
+    schedule_interval=None,
+    start_date=days_ago(1),
+) as dag:
+    get_k8s_secret_task= get_k8s_secret(secret_name='airflowtest', namespace='dolphin-ns')
+
+
