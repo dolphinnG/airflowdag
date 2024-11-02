@@ -32,7 +32,7 @@ def run_torchx(message):
             ["--msg", f"{message}AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"],
             scheduler="kubernetes",
             cfg={
-                "queue": "dolphin-queu",
+                "queue": "default",
                 "namespace": "dolphin-ns",
                 # "scheduler": "volcano",
                 # "api_server": "https://volcano-admission-service:443",
