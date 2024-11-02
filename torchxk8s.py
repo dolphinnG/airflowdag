@@ -22,7 +22,7 @@ def run_torchx(message):
     config.load_incluster_config()
     from torchx.runner import get_runner
     import logging 
-import os
+    import os
     logger = logging.getLogger(__name__)
     logger.info("Running TorchX job with message: %s", message)
     with get_runner() as runner:
