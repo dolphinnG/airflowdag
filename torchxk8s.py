@@ -13,8 +13,8 @@ DATA_INTERVAL_END = DATA_INTERVAL_START + datetime.timedelta(days=1)
 @task(task_id='hello_torchx')
 def run_torchx(message):
     """This is a function that will run within the DAG execution"""
-    import os
-    os.environ['KUBECONFIG'] = '/.kube/config'
+    # import os
+    # os.environ['KUBECONFIG'] = '/.kube/config'
     from torchx.runner import get_runner
     import logging 
     logger = logging.getLogger(__name__)
